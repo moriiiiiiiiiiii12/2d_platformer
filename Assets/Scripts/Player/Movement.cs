@@ -1,15 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+using System;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float _speedMove = 20f;
     [SerializeField] private Rigidbody2D _rigidbody2d;
-    
-    private void FixedUpdate()
+
+    public event Action<bool> RunChange;
+    public event Action<bool> SideChange;
+
+    private bool _side = true;
+
+    private void Update()
     {
         Move();
     }
@@ -18,6 +21,26 @@ public class Movement : MonoBehaviour
     {
         float inputX = Input.GetAxis("Horizontal");
 
-        _rigidbody2d.velocity = new Vector2(inputX * _speedMove, _rigidbody2d.velocity.y);
+        if (inputX != 0)
+        {
+            _rigidbody2d.velocity = new Vector2(inputX * _speedMove, _rigidbody2d.velocity.y);
+
+            RunChange?.Invoke(true);
+
+            if (_side == false && inputX > 0)
+            {
+                _side = true;
+                SideChange?.Invoke(_side);
+            }
+            else if (_side == true && inputX < 0)
+            {
+                _side = false;
+                SideChange?.Invoke(_side);
+            }
+        }
+        else
+        {
+            RunChange?.Invoke(false);
+        }
     }
 }
