@@ -11,7 +11,7 @@ public class Jumper : MonoBehaviour
     [SerializeField] private float _fallThreshold = -0.1f;
     [SerializeField] private float _ascendThreshold = 0.5f;
 
-    public bool OnGrounded { get; private set; }
+    public bool OnGround { get; private set; }
 
     public event Action<bool> JumpingChange;
     public event Action<bool> AscendChange;
@@ -24,12 +24,12 @@ public class Jumper : MonoBehaviour
 
     private void Jump()
     {
-        bool buttonPressed = Input.GetAxisRaw("Jump") == 1;
-        OnGrounded = Physics2D.Raycast(transform.position, Vector2.down, _checkDistance, _layerMask).collider != null;
+        bool isButtonPress = Input.GetAxisRaw("Jump") == 1;
+        OnGround = Physics2D.Raycast(transform.position, Vector2.down, _checkDistance, _layerMask).collider != null;
 
-        JumpingChange?.Invoke(buttonPressed);
+        JumpingChange?.Invoke(isButtonPress);
 
-        if (buttonPressed && OnGrounded)
+        if (isButtonPress && OnGround)
         {
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpPower);
         }

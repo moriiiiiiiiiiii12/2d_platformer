@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
     public event Action<bool> RunChange;
     public event Action<bool> SideChange;
 
-    private bool _side = true;
+    private bool _isLeft = false;
 
     private void Update()
     {
@@ -27,20 +27,24 @@ public class Movement : MonoBehaviour
 
             RunChange?.Invoke(true);
 
-            if (_side == false && inputX > 0)
+            if (_isLeft == false && inputX < 0)
             {
-                _side = true;
-                SideChange?.Invoke(_side);
+                SetSide(true);
             }
-            else if (_side == true && inputX < 0)
+            else if (_isLeft == true && inputX > 0)
             {
-                _side = false;
-                SideChange?.Invoke(_side);
+                SetSide(false);
             }
         }
         else
         {
             RunChange?.Invoke(false);
         }
+    }
+
+    private void SetSide(bool isLeft)
+    {
+        _isLeft = isLeft;
+        SideChange?.Invoke(_isLeft);
     }
 }

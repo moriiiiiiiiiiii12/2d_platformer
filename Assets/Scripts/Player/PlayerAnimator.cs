@@ -30,28 +30,26 @@ public class PlayerAnimator : MonoBehaviour
     private void OnJumpChanged(bool isJumping)
     {
         _isJumping = isJumping;
-        bool shouldJump = isJumping;
 
-        _animator.SetBool("Jump", shouldJump);
+        _animator.SetBool("Jump", isJumping);
     }
 
     private void OnRunChanged(bool isRunning)
     {
-        bool canRun = _jumper.OnGrounded && !_isJumping;
+        bool canRun = _jumper.OnGround && !_isJumping;
         bool shouldRun = isRunning && canRun;
 
         _animator.SetBool("Run", shouldRun);
     }
 
-    private void OnSideChanged(bool faceRight)
+    private void OnSideChanged(bool isLeft)
     {
-        bool shouldFlip = !faceRight;
-        _spriteRenderer.flipX = shouldFlip;
+        _spriteRenderer.flipX = isLeft;
     }
 
     private void OnAscendChanged(bool isAscending)
     {
-        bool canAscend = !_jumper.OnGrounded;
+        bool canAscend = !_jumper.OnGround;
         bool shouldAscend = isAscending && canAscend;
 
         _animator.SetBool("IsAscending", shouldAscend);
@@ -59,7 +57,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnFallChanged(bool isFalling)
     {
-        bool canFall = !_jumper.OnGrounded;
+        bool canFall = !_jumper.OnGround;
         bool shouldFall = isFalling && canFall;
 
         _animator.SetBool("IsFalling", shouldFall);
