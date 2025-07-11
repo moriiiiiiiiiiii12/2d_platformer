@@ -1,23 +1,14 @@
 using UnityEngine;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private Movement _movement;
     [SerializeField] private Jumper _jumper;
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
-    private bool _isAscending;
-    private bool _isFalling;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-        _movement = GetComponent<Movement>();
-        _jumper = GetComponent<Jumper>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+    private bool _isJumping;
 
     private void OnEnable()
     {
@@ -38,28 +29,39 @@ public class PlayerController : MonoBehaviour
 
     private void OnJumpChanged(bool isJumping)
     {
-        _animator.SetBool("Jump", isJumping);
+        _isJumping = isJumping;
+        bool shouldJump = isJumping;
+
+        _animator.SetBool("Jump", shouldJump);
     }
 
     private void OnRunChanged(bool isRunning)
     {
-        _animator.SetBool("Run", isRunning && _jumper.OnGrounded == true && _animator.GetBool("Jump") == false);
+        bool canRun = _jumper.OnGrounded && !_isJumping;
+        bool shouldRun = isRunning && canRun;
+
+        _animator.SetBool("Run", shouldRun);
     }
 
     private void OnSideChanged(bool faceRight)
     {
-        _spriteRenderer.flipX = !faceRight;
+        bool shouldFlip = !faceRight;
+        _spriteRenderer.flipX = shouldFlip;
     }
 
     private void OnAscendChanged(bool isAscending)
     {
-        _isAscending = isAscending;
-        _animator.SetBool("IsAscending", isAscending && _jumper.OnGrounded == false);
+        bool canAscend = !_jumper.OnGrounded;
+        bool shouldAscend = isAscending && canAscend;
+
+        _animator.SetBool("IsAscending", shouldAscend);
     }
 
     private void OnFallChanged(bool isFalling)
     {
-        _isFalling = isFalling;
-        _animator.SetBool("IsFalling", isFalling && _jumper.OnGrounded == false);
+        bool canFall = !_jumper.OnGrounded;
+        bool shouldFall = isFalling && canFall;
+
+        _animator.SetBool("IsFalling", shouldFall);
     }
 }

@@ -8,6 +8,9 @@ public class Jumper : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _checkDistance = 1f;
 
+    [SerializeField] private float _fallThreshold = -0.1f;
+    [SerializeField] private float _ascendThreshold = 0.5f;
+
     public bool OnGrounded { get; private set; }
 
     public event Action<bool> JumpingChange;
@@ -31,9 +34,9 @@ public class Jumper : MonoBehaviour
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpPower);
         }
 
-        float vy = _rigidbody2D.velocity.y;
-        FallChange?.Invoke(vy < -0.1f);
-        AscendChange?.Invoke(vy > 0.5f);
+        float velocityY = _rigidbody2D.velocity.y;
+        FallChange?.Invoke(velocityY < _fallThreshold);
+        AscendChange?.Invoke(velocityY > _ascendThreshold);
     }
 
     private void OnDrawGizmos()
