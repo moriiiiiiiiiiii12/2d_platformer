@@ -23,6 +23,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         _movement.RunChange -= OnRunChanged;
         _movement.SideChange -= OnSideChanged;
+        _jumper.JumpingChange -= OnJumpChanged;
         _jumper.AscendChange -= OnAscendChanged;
         _jumper.FallChange -= OnFallChanged;
     }
@@ -49,7 +50,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnAscendChanged(bool isAscending)
     {
-        bool canAscend = !_jumper.IsOnGround;
+        bool canAscend = _jumper.IsOnGround == false;
         bool shouldAscend = isAscending && canAscend;
 
         _animator.SetBool("IsAscending", shouldAscend);
@@ -57,7 +58,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnFallChanged(bool isFalling)
     {
-        bool canFall = !_jumper.IsOnGround;
+        bool canFall = _jumper.IsOnGround == false;
         bool shouldFall = isFalling && canFall;
 
         _animator.SetBool("IsFalling", shouldFall);

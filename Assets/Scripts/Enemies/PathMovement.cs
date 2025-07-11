@@ -10,14 +10,14 @@ public class PathMovement : MonoBehaviour
 
     public event Action<bool> SideChange;
 
-    private Transform[] _waypoints => _path.Waypoints.ToArray();
+    private Transform[] Waypoints => _path.Waypoints.ToArray();
 
     private int _indexCurrentWaypoint;
     private bool _isMovingRight = true;
 
     private void Update()
     {
-        Transform waypoint = _waypoints[_indexCurrentWaypoint];
+        Transform waypoint = Waypoints[_indexCurrentWaypoint];
         transform.position = Vector2.MoveTowards(transform.position, waypoint.position, _speed * Time.deltaTime);
 
         float deltaX = waypoint.position.x - transform.position.x;
@@ -35,6 +35,6 @@ public class PathMovement : MonoBehaviour
 
     private void ChooseNextWaypoint()
     {
-        _indexCurrentWaypoint = ++_indexCurrentWaypoint % _waypoints.Length;
+        _indexCurrentWaypoint = ++_indexCurrentWaypoint % Waypoints.Length;
     }
 }

@@ -17,26 +17,46 @@ public class Jumper : MonoBehaviour
     public event Action<bool> AscendChange;
     public event Action<bool> FallChange;
 
+    private bool _prevJumpPressed;
+    private bool _prevAscending;
+    private bool _prevFalling;
+
     private void Update()
     {
-        Jump();
+        HandleJump();
     }
 
-    private void Jump()
+    private void HandleJump()
     {
-        bool isButtonPress = Input.GetAxisRaw("Jump") == 1;
+        bool jumpPressed = Input.GetAxisRaw("Jump") == 1;
         IsOnGround = Physics2D.Raycast(transform.position, Vector2.down, _checkDistance, _layerMask).collider != null;
 
-        JumpingChange?.Invoke(isButtonPress);
+        if (jumpPressed != _prevJumpPressed)
+        {
+            JumpingChange?.Invoke(jumpPressed);
+            _prevJumpPressed = jumpPressed;
+        }
 
-        if (isButtonPress && IsOnGround)
+        if (jumpPressed && IsOnGround)
         {
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpPower);
         }
 
         float velocityY = _rigidbody2D.velocity.y;
-        FallChange?.Invoke(velocityY < _fallThreshold);
-        AscendChange?.Invoke(velocityY > _ascendThreshold);
+        bool falling = velocityY < _fallThreshold;
+        bool ascending = velocityY > _ascendThreshold;
+
+        if (falling != _prevFalling)
+        {
+            FallChange?.Invoke(falling);
+            _prevFalling = falling;
+        }
+
+        if (ascending != _prevAscending)
+        {
+            AscendChange?.Invoke(ascending);
+            _prevAscending = ascending;
+        }
     }
 
     private void OnDrawGizmos()
