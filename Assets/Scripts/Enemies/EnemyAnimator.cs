@@ -17,6 +17,6 @@ public class EnemyAnimator : MonoBehaviour
 
     private void OnSideChanged(bool faceRight)
     {
-        _spriteRenderer.flipX = !faceRight;
+        _spriteRenderer.flipX = faceRight == false;
     }
 }

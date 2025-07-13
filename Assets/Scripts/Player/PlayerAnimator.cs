@@ -3,14 +3,13 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private InputReader _inpurReader;
-
-    private bool _isJumping;
 
     private static readonly int RunHash = Animator.StringToHash("Run");
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int AscendHash = Animator.StringToHash("IsAscending");
     private static readonly int FallHash = Animator.StringToHash("IsFalling");
+    
+    private bool _isJumping;
 
     public void OnJumpChanged(bool isJumping)
     {
