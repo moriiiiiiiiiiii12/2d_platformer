@@ -2,8 +2,8 @@ using UnityEngine;
 
 class CameraMover : MonoBehaviour
 {
-    [SerializeField] Transform _player;
-    [SerializeField] float _speed = 4f;
+    [SerializeField] private Transform _player;
+    [SerializeField] private float _speed = 4f;
 
     private void LateUpdate()
     {

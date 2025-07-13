@@ -8,8 +8,6 @@ public class PathMovement : MonoBehaviour
     [SerializeField] private Path _path;
     [SerializeField] private float _distanceTarget = 0.1f;
 
-    public event Action<bool> SideChange;
-
     private Transform[] Waypoints => _path.Waypoints.ToArray();
 
     private int _indexCurrentWaypoint;
@@ -26,7 +24,7 @@ public class PathMovement : MonoBehaviour
         if (newIsMovingRight != _isMovingRight)
         {
             _isMovingRight = newIsMovingRight;
-            SideChange?.Invoke(_isMovingRight);
+            SetSide(_isMovingRight);
         }
 
         if (Vector2Extension.IsEnoughClose(transform.position, waypoint.position, _distanceTarget))
@@ -36,5 +34,13 @@ public class PathMovement : MonoBehaviour
     private void ChooseNextWaypoint()
     {
         _indexCurrentWaypoint = ++_indexCurrentWaypoint % Waypoints.Length;
+    }
+
+    private void SetSide(bool isRight)
+    {
+        _isMovingRight = isRight;
+
+        float yRotation = isRight ? 180f : 0f;
+        transform.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }

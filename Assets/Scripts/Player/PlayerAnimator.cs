@@ -11,30 +11,24 @@ public class PlayerAnimator : MonoBehaviour
     
     private bool _isJumping;
 
-    public void OnJumpChanged(bool isJumping)
+    public void SetJump(bool isJumping)
     {
         _isJumping = isJumping;
         _animator.SetBool(JumpHash, isJumping);
     }
 
-    public void OnRunChanged(bool isRunning)
+    public void SetRun(bool isRunning)
     {
         bool shouldRun = isRunning && _isJumping == false;
         _animator.SetBool(RunHash, shouldRun);
     }
 
-    public void OnSideChanged(bool isLeft)
-    {
-        float yRotation = isLeft ? 180f : 0f;
-        transform.rotation = Quaternion.Euler(0, yRotation, 0);
-    }
-
-    public void OnAscendChanged(bool isAscending)
+    public void SetAscend(bool isAscending)
     {
         _animator.SetBool(AscendHash, isAscending);
     }
 
-    public void OnFallChanged(bool isFalling)
+    public void SetFall(bool isFalling)
     {
         _animator.SetBool(FallHash, isFalling);
     }
