@@ -9,7 +9,7 @@ public class Jumper : MonoBehaviour
     [SerializeField] private float _checkDistance = 1f;
 
     [SerializeField] private float _fallThreshold = -0.1f;
-    [SerializeField] private float _ascendThreshold = 0.5f;
+    [SerializeField] private float _ascendThreshold = 0.1f;
 
     public bool IsOnGround { get; private set; }
 
@@ -17,9 +17,9 @@ public class Jumper : MonoBehaviour
     public event Action<bool> AscendChange;
     public event Action<bool> FallChange;
 
-    private bool _prevJumpPressed;
-    private bool _prevAscending;
-    private bool _prevFalling;
+    private bool _prevJumpPressed = false;
+    private bool _prevAscending = false;
+    private bool _prevFalling = false;
 
     private void Update()
     {
@@ -28,14 +28,17 @@ public class Jumper : MonoBehaviour
 
     private void HandleJump()
     {
-        bool jumpPressed = Input.GetAxisRaw("Jump") == 1;
-        IsOnGround = Physics2D.Raycast(transform.position, Vector2.down, _checkDistance, _layerMask).collider != null;
+        const string JumpButton = "Jump";
 
-        if (jumpPressed != _prevJumpPressed)
-        {
-            JumpingChange?.Invoke(jumpPressed);
-            _prevJumpPressed = jumpPressed;
-        }
+        bool jumpPressed = Input.GetButtonDown(JumpButton);
+
+        // if (jumpPressed != _prevJumpPressed)
+        // {
+        //     JumpingChange?.Invoke(jumpPressed); 
+        //     _prevJumpPressed = jumpPressed;
+        // }
+
+        IsOnGround = CheckIsOnGround();
 
         if (jumpPressed && IsOnGround)
         {
@@ -46,17 +49,22 @@ public class Jumper : MonoBehaviour
         bool falling = velocityY < _fallThreshold;
         bool ascending = velocityY > _ascendThreshold;
 
-        if (falling != _prevFalling)
-        {
-            FallChange?.Invoke(falling);
-            _prevFalling = falling;
-        }
-
         if (ascending != _prevAscending)
         {
             AscendChange?.Invoke(ascending);
             _prevAscending = ascending;
         }
+
+        if (falling != _prevFalling)
+        {
+            FallChange?.Invoke(falling && IsOnGround == false);
+            _prevFalling = falling;
+        }
+    }
+
+    private bool CheckIsOnGround()
+    {
+        return Physics2D.Raycast(transform.position, Vector2.down, _checkDistance, _layerMask).collider != null;
     }
 
     private void OnDrawGizmos()

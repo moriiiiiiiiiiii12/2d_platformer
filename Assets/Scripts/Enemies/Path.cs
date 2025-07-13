@@ -22,7 +22,8 @@ public class Path : MonoBehaviour
     
     private void OnDrawGizmos()
     {
-        if (_waypoints == null || _waypoints.Length < 2) return;
+        if (_waypoints == null || _waypoints.Length < 2)
+            return;
 
         Gizmos.color = Color.red;
         const float radius = 0.1f;

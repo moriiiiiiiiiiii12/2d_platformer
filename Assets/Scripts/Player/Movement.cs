@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     public event Action<bool> SideChange;
 
     private bool _isLeft = false;
-
+    
     private void Update()
     {
         Move();
@@ -19,7 +19,9 @@ public class Movement : MonoBehaviour
 
     private void Move()
     {
-        float inputX = Input.GetAxis("Horizontal");
+        const string HorizontalAxis = "Horizontal";
+
+        float inputX = Input.GetAxis(HorizontalAxis);
 
         if (inputX != 0)
         {
