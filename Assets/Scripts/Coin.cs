@@ -1,15 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void CollectCoin()
     {
-        if (collision.TryGetComponent(out Wallet coinCollector))
-        {
-            coinCollector.IncreaseCoin();
-
-            gameObject.SetActive(false);
-        }
+        gameObject.SetActive(false);
     }
 }

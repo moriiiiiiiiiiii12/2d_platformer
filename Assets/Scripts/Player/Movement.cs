@@ -1,33 +1,27 @@
 using System;
 using UnityEngine;
 
-
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float _speedMove = 20f;
+    [SerializeField] private PlayerAnimator _playerAnimator;
+    [SerializeField] private InputReader _inputReader;
     [SerializeField] private Rigidbody2D _rigidbody2d;
-
-    public event Action<bool> RunChange;
-    public event Action<bool> SideChange;
+    [SerializeField] private float _speedMove;
 
     private bool _isLeft = false;
-    
+
     private void Update()
     {
-        Move();
+        Move(_inputReader.HorizontalAxis);
     }
 
-    private void Move()
+    private void Move(float inputX)
     {
-        const string HorizontalAxis = "Horizontal";
-
-        float inputX = Input.GetAxis(HorizontalAxis);
-
         if (inputX != 0)
         {
             _rigidbody2d.velocity = new Vector2(inputX * _speedMove, _rigidbody2d.velocity.y);
 
-            RunChange?.Invoke(true);
+            _playerAnimator.OnRunChanged(true);
 
             if (_isLeft == false && inputX < 0)
             {
@@ -40,13 +34,13 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            RunChange?.Invoke(false);
+            _playerAnimator.OnRunChanged(false);
         }
     }
 
     private void SetSide(bool isLeft)
     {
         _isLeft = isLeft;
-        SideChange?.Invoke(_isLeft);
+        _playerAnimator.OnSideChanged(_isLeft);
     }
 }

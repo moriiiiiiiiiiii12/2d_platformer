@@ -1,65 +1,68 @@
-using System;
 using UnityEngine;
 
 public class Jumper : MonoBehaviour
 {
-    [SerializeField] private float _jumpPower = 10f;
+    [SerializeField] private PlayerAnimator _playerAnimator;
+    [SerializeField] private InputReader _inputReader;
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private float _jumpPower = 10f;
     [SerializeField] private float _checkDistance = 1f;
 
-    [SerializeField] private float _fallThreshold = -0.1f;
-    [SerializeField] private float _ascendThreshold = 0.1f;
+    [SerializeField] private float _fallThreshold = -0.5f;
+    [SerializeField] private float _ascendThreshold = 0.5f;
 
     public bool IsOnGround { get; private set; }
 
-    public event Action<bool> JumpingChange;
-    public event Action<bool> AscendChange;
-    public event Action<bool> FallChange;
-
-    private bool _prevJumpPressed = false;
     private bool _prevAscending = false;
     private bool _prevFalling = false;
 
-    private void Update()
+    private void OnEnable()
     {
-        HandleJump();
+        _inputReader.PressJumpInput += Jump;
     }
 
-    private void HandleJump()
+    private void OnDisable()
     {
-        const string JumpButton = "Jump";
+        _inputReader.PressJumpInput -= Jump;
+    }
 
-        bool jumpPressed = Input.GetButtonDown(JumpButton);
+    private void Update()
+    {
+        UpdateJumpState();
+    }
 
-        // if (jumpPressed != _prevJumpPressed)
-        // {
-        //     JumpingChange?.Invoke(jumpPressed); 
-        //     _prevJumpPressed = jumpPressed;
-        // }
-
+    private void Jump()
+    {
         IsOnGround = CheckIsOnGround();
 
-        if (jumpPressed && IsOnGround)
+        if (IsOnGround)
         {
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpPower);
         }
+    }
 
+    private void UpdateJumpState()
+    {
         float velocityY = _rigidbody2D.velocity.y;
         bool falling = velocityY < _fallThreshold;
         bool ascending = velocityY > _ascendThreshold;
 
+        IsOnGround = CheckIsOnGround();
+
         if (ascending != _prevAscending)
         {
-            AscendChange?.Invoke(ascending);
-            _prevAscending = ascending;
+            _prevAscending = ascending && IsOnGround == false;
+            _playerAnimator.OnAscendChanged(_prevAscending);
         }
 
         if (falling != _prevFalling)
         {
-            FallChange?.Invoke(falling && IsOnGround == false);
-            _prevFalling = falling;
+            _prevFalling = falling && IsOnGround == false;
+            _playerAnimator.OnFallChanged(_prevFalling);
         }
+
+        _playerAnimator.OnJumpChanged(IsOnGround == false);
     }
 
     private bool CheckIsOnGround()
