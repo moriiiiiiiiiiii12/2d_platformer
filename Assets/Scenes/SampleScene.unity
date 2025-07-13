@@ -1029,11 +1029,13 @@ GameObject:
   - component: {fileID: 1296320671}
   - component: {fileID: 1296320673}
   - component: {fileID: 1296320674}
-  - component: {fileID: 1296320670}
   - component: {fileID: 1296320675}
-  - component: {fileID: 1296320677}
   - component: {fileID: 1296320678}
+  - component: {fileID: 1296320677}
+  - component: {fileID: 1296320670}
   - component: {fileID: 1296320679}
+  - component: {fileID: 1296320680}
+  - component: {fileID: 1296320681}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -1053,8 +1055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ad217dee71d48c0ac743c9d0d10f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAnimator: {fileID: 1296320678}
-  _inputReader: {fileID: 1296320679}
   _rigidbody2d: {fileID: 1296320673}
   _speedMove: 10
 --- !u!212 &1296320671
@@ -1200,16 +1200,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97ee7d78996273048669a09d0bb6115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAnimator: {fileID: 1296320678}
-  _inputReader: {fileID: 1296320679}
   _rigidbody2D: {fileID: 1296320673}
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 8
   _jumpPower: 6
-  _checkDistance: 0.9
-  _fallThreshold: -0.5
-  _ascendThreshold: 0.5
+  _fallThreshold: -0.1
+  _ascendThreshold: 0.1
 --- !u!95 &1296320677
 Animator:
   serializedVersion: 5
@@ -1244,7 +1238,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1296320677}
-  _inpurReader: {fileID: 1296320679}
 --- !u!114 &1296320679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1257,6 +1250,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce166af690d977ecab4e4941baea2405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1296320680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296320669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54d0174525f799d8a560e652bd12fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jumper: {fileID: 1296320675}
+  _movement: {fileID: 1296320670}
+  _inputReader: {fileID: 1296320679}
+  _playerAnimator: {fileID: 1296320678}
+  _groundChecker: {fileID: 1296320681}
+--- !u!114 &1296320681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296320669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd7fe7a7dcd27079812e8045c671c5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  _checkDistance: 0.9
 --- !u!1 &1319746805
 GameObject:
   m_ObjectHideFlags: 0
@@ -2840,7 +2866,6 @@ GameObject:
   - component: {fileID: 1871650822}
   - component: {fileID: 1871650820}
   - component: {fileID: 1871650818}
-  - component: {fileID: 1871650821}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2951,20 +2976,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1871650821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871650815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 380706fa05419924c80c257e275e19d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 1871650816}
-  _movement: {fileID: 1871650818}
 --- !u!61 &1871650822
 BoxCollider2D:
   m_ObjectHideFlags: 0
