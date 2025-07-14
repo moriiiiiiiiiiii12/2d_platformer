@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
-
     private static readonly int RunHash = Animator.StringToHash("Run");
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int AscendHash = Animator.StringToHash("IsAscending");
     private static readonly int FallHash = Animator.StringToHash("IsFalling");
+
+    [SerializeField] private Animator _animator;
     
     private bool _isJumping;
 

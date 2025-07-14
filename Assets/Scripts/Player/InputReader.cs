@@ -6,23 +6,16 @@ public class InputReader : MonoBehaviour
     private const string Jump = nameof(Jump);
     private const string Horizontal = nameof(Horizontal);
 
-    public event Action PressJumpInput;
     public float HorizontalAxis { get; private set; }
 
-    private float tempHorizontal;
+    public event Action PressJumpInput;
 
     private void Update()
     {
         bool jumpInput = Input.GetButtonDown(Jump);
-        float horizontalInput = Input.GetAxis(Horizontal);
+        HorizontalAxis = Input.GetAxis(Horizontal);
 
         if (jumpInput)
             PressJumpInput?.Invoke();
-
-        if (horizontalInput != tempHorizontal)
-        {
-            HorizontalAxis = horizontalInput;
-            tempHorizontal = horizontalInput;
-        }
     }
 }

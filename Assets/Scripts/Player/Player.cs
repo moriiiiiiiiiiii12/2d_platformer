@@ -26,7 +26,7 @@ class Player : MonoBehaviour
     {
         float horizontalInput = _inputReader.HorizontalAxis;
 
-        bool IsOnGround = _groundChecker.CheckIsOnGround();
+        bool IsOnGround = _groundChecker.IsOnGround;
 
         _movement.Move(horizontalInput);
 
