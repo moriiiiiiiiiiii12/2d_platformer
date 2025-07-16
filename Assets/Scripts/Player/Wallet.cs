@@ -1,18 +1,19 @@
 using UnityEngine;
 
 
-[RequireComponent(typeof(Collider2D))]
 class Wallet : MonoBehaviour
 {
+    [SerializeField] Collector _collector;
     [SerializeField] private int _countCoin = 0;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnEnable()
     {
-        if (collision.gameObject.TryGetComponent(out Coin coin))
-        {
-            coin.CollectCoin();
-            IncreaseCoin();
-        }
+        _collector.CoinCollected += IncreaseCoin;
+    }
+
+    private void OnDisable()
+    {
+        _collector.CoinCollected -= IncreaseCoin;
     }
 
     private void IncreaseCoin()

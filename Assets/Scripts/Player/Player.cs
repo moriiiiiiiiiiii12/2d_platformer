@@ -2,22 +2,24 @@ using UnityEngine;
 
 class Player : MonoBehaviour
 {
-    [SerializeField] Jumper _jumper;
-    [SerializeField] Movement _movement;
-    [SerializeField] InputReader _inputReader;
-    [SerializeField] PlayerAnimator _playerAnimator;
-    [SerializeField] GroundChecker _groundChecker;
+    [SerializeField] private Jumper _jumper;
+    [SerializeField] private Mover _movement;
+    [SerializeField] private InputReader _inputReader;
+    [SerializeField] private PlayerAnimator _playerAnimator;
+    [SerializeField] private GroundChecker _groundChecker;
+
+    private bool IsOnGround => _groundChecker.IsOnGround;
 
     private void OnEnable()
     {
-        _inputReader.PressJumpInput += _jumper.Jump;
+        _inputReader.PressJumpInput += Jump;
         _jumper.ChangeAscending += Ascending;
         _jumper.ChangeFalling += Falling;
     }
 
     private void OnDisable()
     {
-        _inputReader.PressJumpInput -= _jumper.Jump;
+        _inputReader.PressJumpInput -= Jump;
         _jumper.ChangeAscending -= Ascending;
         _jumper.ChangeFalling -= Falling;
     }
@@ -25,8 +27,6 @@ class Player : MonoBehaviour
     private void Update()
     {
         float horizontalInput = _inputReader.HorizontalAxis;
-
-        bool IsOnGround = _groundChecker.IsOnGround;
 
         _movement.Move(horizontalInput);
 
@@ -48,6 +48,14 @@ class Player : MonoBehaviour
 
         _playerAnimator.SetJump(IsOnGround == false);
         _jumper.UpdateJumpState(IsOnGround);
+    }
+
+    private void Jump()
+    {
+        Debug.Log(IsOnGround);
+
+        if (IsOnGround)
+            _jumper.Jump();
     }
 
     private void Ascending(bool isAscending)

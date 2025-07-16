@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Mover : MonoBehaviour
 {
+    [SerializeField] private SpriteFlipper _spriteFlipper;
     [SerializeField] private Rigidbody2D _rigidbody2d;
     [SerializeField] private float _speedMove;
 
@@ -14,19 +15,13 @@ public class Movement : MonoBehaviour
 
         if (_isLeft == false && inputX < 0)
         {
-            SetSide(true);
+            _isLeft = true;
+            _spriteFlipper.Flip(_isLeft);
         }
         else if (_isLeft == true && inputX > 0)
         {
-            SetSide(false);
+            _isLeft = false;
+            _spriteFlipper.Flip(_isLeft);
         }
-    }
-
-    private void SetSide(bool isLeft)
-    {
-        _isLeft = isLeft;
-
-        float yRotation = isLeft ? 180f : 0f;
-        transform.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }
