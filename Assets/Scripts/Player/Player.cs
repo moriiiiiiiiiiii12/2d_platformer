@@ -52,8 +52,6 @@ class Player : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log(IsOnGround);
-
         if (IsOnGround)
             _jumper.Jump();
     }
