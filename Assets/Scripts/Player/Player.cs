@@ -1,17 +1,19 @@
 using UnityEngine;
 
-class Player : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private Jumper _jumper;
     [SerializeField] private Mover _movement;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PlayerAnimator _playerAnimator;
     [SerializeField] private GroundChecker _groundChecker;
+    [SerializeField] private Attacker _attacker;
 
     private bool IsOnGround => _groundChecker.IsOnGround;
 
     private void OnEnable()
     {
+        _inputReader.AttackInput += Attack;
         _inputReader.PressJumpInput += Jump;
         _jumper.ChangeAscending += Ascending;
         _jumper.ChangeFalling += Falling;
@@ -19,6 +21,7 @@ class Player : MonoBehaviour
 
     private void OnDisable()
     {
+        _inputReader.AttackInput -= Attack;
         _inputReader.PressJumpInput -= Jump;
         _jumper.ChangeAscending -= Ascending;
         _jumper.ChangeFalling -= Falling;
@@ -48,6 +51,12 @@ class Player : MonoBehaviour
 
         _playerAnimator.SetJump(IsOnGround == false);
         _jumper.UpdateJumpState(IsOnGround);
+    }
+
+    private void Attack()
+    {
+        _playerAnimator.SetAttack();
+        _attacker.Attack();
     }
 
     private void Jump()

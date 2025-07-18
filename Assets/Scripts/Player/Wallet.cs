@@ -8,12 +8,12 @@ class Wallet : MonoBehaviour
 
     private void OnEnable()
     {
-        _collector.CollectableCollected += IncreaseCoin;
+        _collector.CoinCollected += IncreaseCoin;
     }
 
     private void OnDisable()
     {
-        _collector.CollectableCollected -= IncreaseCoin;
+        _collector.CoinCollected -= IncreaseCoin;
     }
 
     private void IncreaseCoin(ICollectable collectable)

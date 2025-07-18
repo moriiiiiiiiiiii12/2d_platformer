@@ -33,14 +33,14 @@ public class PathGuide : MonoBehaviour
             return Vector2.zero;
 
         Vector2 currentPosition = currentPosition3D;
-        Vector2 targetPos = _waypoints[_currentIndex].position;
+        Vector2 targetPosition = _waypoints[_currentIndex].position;
 
-        if (currentPosition.IsEnoughClose(targetPos, _distanceTarget))
+        if (currentPosition.IsEnoughClose(targetPosition, _distanceTarget))
         {
             _currentIndex = (_currentIndex + 1) % _waypoints.Length;
-            targetPos = _waypoints[_currentIndex].position;
+            targetPosition = _waypoints[_currentIndex].position;
         }
 
-        return (targetPos - currentPosition).normalized;
+        return (targetPosition - currentPosition).normalized;
     }
 }
