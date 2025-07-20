@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private Attacker _attacker;
     [SerializeField] private PathGuide _pathGuide;
     [SerializeField] private Path _path;
     [SerializeField] private DirectionalMover _directionMover;
@@ -25,9 +26,17 @@ public class Enemy : MonoBehaviour
     }
 
     private void Update()
-    {   
-        Vector2 direction = _pathGuide.GetDirection(transform.position);
-        _directionMover.SetDirection(direction);
+    {
+        if (_directionMover.enabled)
+        {
+            Vector2 direction = _pathGuide.GetDirection(transform.position);
+            _directionMover.SetDirection(direction);
+        }
+        else if (_targetMover.enabled)
+        {
+            Debug.Log("аттакует");
+            _attacker.Attack();
+        }
     }
 
     private void Follow(Player target)

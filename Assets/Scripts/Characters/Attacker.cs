@@ -1,11 +1,14 @@
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
+    [SerializeField] private Collider2D _attackArea;
     [SerializeField] private float _minAttackValue;
     [SerializeField] private float _maxAttackValue;
-    [SerializeField] private float _radius;
+    [SerializeField] private float _cooldown;
+
+    private bool _canAttack = true;
 
     public void Attack()
     {
@@ -13,8 +16,11 @@ public class Attacker : MonoBehaviour
 
         Health entity = GetEntity();
 
-        if (entity != null)
+        if (entity != null && _canAttack)
+        {
+            StartCoroutine(WaitCooldown());
             entity.Decrease(attackValue);
+        }
     }
 
     private Health GetEntity()
@@ -23,11 +29,21 @@ public class Attacker : MonoBehaviour
 
         foreach (Collider2D entity in entities)
         {
-            if (entity.gameObject.TryGetComponent(out Health health))
+            // if (entity.TryGetComponent(out Player player))
+            if (entity.TryGetComponent(out Health health))
                 return health;
         }
 
         return null;
+    }
+
+    private IEnumerator WaitCooldown()
+    {
+        _canAttack = false;
+
+        yield return new WaitForSeconds(_cooldown);
+
+        _canAttack = true;
     }
 
     private void OnDrawGizmosSelected()

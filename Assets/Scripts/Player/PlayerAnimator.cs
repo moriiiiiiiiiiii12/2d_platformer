@@ -6,15 +6,21 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int s_jumpHash = Animator.StringToHash("Jump");
     private static readonly int s_ascendHash = Animator.StringToHash("IsAscending");
     private static readonly int s_fallHash = Animator.StringToHash("IsFalling");
-    private static readonly int s_attackHash = Animator.StringToHash("AttackTrigger");
+    private static readonly int s_attackHash = Animator.StringToHash("Attack");
+    private static readonly int s_takeDamageHash = Animator.StringToHash("TakeDamage");
 
     [SerializeField] private Animator _animator;
     
     private bool _isJumping;
 
-    public void SetAttack()
+    public void TriggerAttack()
     {
         _animator.SetTrigger(s_attackHash);
+    }
+
+    public void TriggerTakeDamage()
+    {
+        _animator.SetTrigger(s_takeDamageHash);
     }
 
     public void SetJump(bool isJumping)
