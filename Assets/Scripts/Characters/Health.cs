@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-class Health : MonoBehaviour
+public class Health : MonoBehaviour
 {
     [SerializeField] private Collector _collector;
     [SerializeField] private float _minValue = 0;

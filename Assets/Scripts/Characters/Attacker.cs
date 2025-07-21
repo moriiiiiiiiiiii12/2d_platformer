@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private Collider2D _attackArea;
+    [SerializeField] private AttackArea _attackArea;
     [SerializeField] private float _minAttackValue;
     [SerializeField] private float _maxAttackValue;
     [SerializeField] private float _cooldown;
@@ -12,29 +12,18 @@ public class Attacker : MonoBehaviour
 
     public void Attack()
     {
+        if (_canAttack == false)
+            return; 
+
         float attackValue = Random.Range(_minAttackValue, _maxAttackValue);
+        Health entity = _attackArea?.GetEntity(); 
 
-        Health entity = GetEntity();
-
-        if (entity != null && _canAttack)
+        if (entity != null)
         {
-            StartCoroutine(WaitCooldown());
             entity.Decrease(attackValue);
         }
-    }
 
-    private Health GetEntity()
-    {
-        Collider2D[] entities = Physics2D.OverlapCircleAll(transform.position, _radius);
-
-        foreach (Collider2D entity in entities)
-        {
-            // if (entity.TryGetComponent(out Player player))
-            if (entity.TryGetComponent(out Health health))
-                return health;
-        }
-
-        return null;
+        StartCoroutine(WaitCooldown());
     }
 
     private IEnumerator WaitCooldown()
@@ -44,10 +33,5 @@ public class Attacker : MonoBehaviour
         yield return new WaitForSeconds(_cooldown);
 
         _canAttack = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 }

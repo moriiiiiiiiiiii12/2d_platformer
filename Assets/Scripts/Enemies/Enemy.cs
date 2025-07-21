@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Attacker _attacker;
+    [SerializeField] private AttackArea _attackArea;
     [SerializeField] private PathGuide _pathGuide;
     [SerializeField] private Path _path;
     [SerializeField] private DirectionalMover _directionMover;
@@ -34,9 +36,15 @@ public class Enemy : MonoBehaviour
         }
         else if (_targetMover.enabled)
         {
-            Debug.Log("аттакует");
-            _attacker.Attack();
+            Attack();
         }
+    }
+
+    private void Attack()
+    {
+        if (_attackArea.EntityCount > 0)
+            _attacker.Attack();
+
     }
 
     private void Follow(Player target)
