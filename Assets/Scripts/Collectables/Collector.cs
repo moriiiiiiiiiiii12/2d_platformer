@@ -1,28 +1,29 @@
 using System;
 using UnityEngine;
 
-
 public class Collector : MonoBehaviour
 {
-    public event Action<ICollectable> CoinCollected;
-    public event Action<ICollectable> HealthKitCollected;
+    public event Action CoinCollected;
+    public event Action<float> HealthKitCollected;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.TryGetComponent(out ICollectable collectable))
+        ICollectable collectable;
+
+        if (collider.TryGetComponent(out collectable) == false)
+            return;
+
+        switch (collectable)
         {
-            collectable.Collect();
+            case Coin coin:
+                coin.Collect();
+                CoinCollected?.Invoke();
+                break;
 
-            switch (collectable.TypeCollectable)
-            {
-                case TypeCollectable.Coin:
-                    CoinCollected?.Invoke(collectable);
-                    break;
-
-                case TypeCollectable.HealthKit:
-                    HealthKitCollected?.Invoke(collectable);
-                    break;
-            }
+            case HealthKit healthKit:
+                healthKit.Collect();
+                HealthKitCollected?.Invoke(healthKit.HealingAmount);
+                break;
         }
     }
 }

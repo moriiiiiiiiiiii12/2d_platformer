@@ -16,9 +16,8 @@ class Wallet : MonoBehaviour
         _collector.CoinCollected -= IncreaseCoin;
     }
 
-    private void IncreaseCoin(ICollectable collectable)
+    private void IncreaseCoin()
     {
-        if (collectable.TypeCollectable == TypeCollectable.Coin)
-            _countCoin++;
+        _countCoin++;
     }
 }

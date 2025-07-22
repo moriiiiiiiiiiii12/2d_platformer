@@ -10,9 +10,4 @@ public class HealthKit : Collectable
     {
         this.TypeCollectable = TypeCollectable.HealthKit;
     }
-
-    public override void Collect()
-    {
-        base.Collect();
-    }
 }

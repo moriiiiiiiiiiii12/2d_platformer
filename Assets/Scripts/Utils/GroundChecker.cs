@@ -20,7 +20,7 @@ public class GroundChecker : MonoBehaviour
     private IEnumerator UpdateGroundStatusRoutine()
     {
         var wait = new WaitForSeconds(_checkInterval);
-        while (true)
+        while (enabled)
         {
             Vector2 origin = transform.position;
             RaycastHit2D hit = Physics2D.CircleCast(

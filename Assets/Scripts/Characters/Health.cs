@@ -18,22 +18,20 @@ public class Health : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_collector != null) 
-            _collector.HealthKitCollected += Increase;
+        if (_collector != null)
+            _collector.HealthKitCollected -= Increase;
     }
 
-    private void Increase(ICollectable collectable)
+    private void Increase(float value)
     {
         if (_value == _maxValue)
             return;
 
-        if (collectable is HealthKit healthKit)
-        {
-            _value += healthKit.HealingAmount;
+        _value += value;
 
-            if (_value > _maxValue)
-                _value = _maxValue;
-        }
+        if (_value > _maxValue)
+            _value = _maxValue;
+        
     }
 
     public void Decrease(float value)

@@ -37,7 +37,7 @@ public class SpawnerCollectable : MonoBehaviour
 
     private IEnumerator Spawn()
     {
-        while (true)
+        while (enabled)
         {
             if (_countActiveCollectables <= _poolSize)
             {

@@ -16,7 +16,7 @@ public class Attacker : MonoBehaviour
             return; 
 
         float attackValue = Random.Range(_minAttackValue, _maxAttackValue);
-        Health entity = _attackArea?.GetEntity(); 
+        Health entity = _attackArea.GetEntity(); 
 
         if (entity != null)
         {
