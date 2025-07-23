@@ -10,15 +10,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] private DirectionalMover _directionMover;
     [SerializeField] private TargetMover _targetMover;
     [SerializeField] private DetectionRadius _detectRadius;
+    [SerializeField] private Health _health;
 
     private void OnEnable()
     {
         _detectRadius.Detect += Follow;
+
+        _health.HealthEnded += Die;
     }
 
     private void OnDisable()
     {
         _detectRadius.Detect -= Follow;
+
+        _health.HealthEnded -= Die;
     }
 
     private void Start()
@@ -53,5 +58,10 @@ public class Enemy : MonoBehaviour
 
         _targetMover.SetTarget(target.transform);
         _targetMover.enabled = true;
+    }
+    
+    private void Die()
+    {
+        gameObject.SetActive(false);
     }
 }

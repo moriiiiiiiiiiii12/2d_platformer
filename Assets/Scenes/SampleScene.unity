@@ -3135,6 +3135,7 @@ MonoBehaviour:
   _directionMover: {fileID: 1871650824}
   _targetMover: {fileID: 1871650829}
   _detectRadius: {fileID: 858620735}
+  _health: {fileID: 1871650827}
 --- !u!114 &1871650826
 MonoBehaviour:
   m_ObjectHideFlags: 0

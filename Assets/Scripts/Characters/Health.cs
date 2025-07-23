@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float _value = 100;
 
     public event Action TookDamage;
+    public event Action HealthEnded;
 
     private void OnEnable()
     {
@@ -31,7 +32,6 @@ public class Health : MonoBehaviour
 
         if (_value > _maxValue)
             _value = _maxValue;
-        
     }
 
     public void Decrease(float value)
@@ -41,11 +41,6 @@ public class Health : MonoBehaviour
         TookDamage?.Invoke();
 
         if (_value < _minValue)
-            Die();
-    }
-
-    public void Die()
-    {
-        gameObject.SetActive(false);
+            HealthEnded?.Invoke();
     }
 }

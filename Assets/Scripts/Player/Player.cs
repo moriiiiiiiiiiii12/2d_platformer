@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
         _jumper.ChangeFalling += Falling;
 
         _health.TookDamage += TookDamage;
+        _health.HealthEnded += Die;
     }
 
     private void OnDisable()
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
         _jumper.ChangeFalling -= Falling;
 
         _health.TookDamage -= TookDamage;
+        _health.HealthEnded -= Die;
     }
 
     private void Update()
@@ -85,5 +87,10 @@ public class Player : MonoBehaviour
     private void Falling(bool isFalling)
     {
         _playerAnimator.SetFall(isFalling);
+    }
+
+    private void Die()
+    {
+        gameObject.SetActive(false);
     }
 }
