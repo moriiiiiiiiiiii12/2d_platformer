@@ -25,6 +25,9 @@ public class Health : MonoBehaviour
 
     private void Increase(float value)
     {
+        if (value <= 0)
+            return;
+
         if (_value == _maxValue)
             return;
 
@@ -36,11 +39,14 @@ public class Health : MonoBehaviour
 
     public void Decrease(float value)
     {
+        if (value <= 0)
+            return;
+
         _value -= value;
 
         TookDamage?.Invoke();
 
-        if (_value < _minValue)
+        if (_value <= _minValue)
             HealthEnded?.Invoke();
     }
 }
