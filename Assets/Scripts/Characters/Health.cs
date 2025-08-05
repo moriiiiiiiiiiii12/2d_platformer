@@ -9,7 +9,12 @@ public class Health : MonoBehaviour
     [SerializeField] private float _value = 100;
 
     public event Action TookDamage;
+    public event Action Healed;
     public event Action HealthEnded;
+
+    public float MinValue => _minValue; 
+    public float MaxValue => _maxValue; 
+    public float Value => _value;
 
     private void OnEnable()
     {
@@ -23,7 +28,7 @@ public class Health : MonoBehaviour
             _collector.HealthKitCollected -= Increase;
     }
 
-    private void Increase(float value)
+    public void Increase(float value)
     {
         if (value <= 0)
             return;
@@ -35,6 +40,8 @@ public class Health : MonoBehaviour
 
         if (_value > _maxValue)
             _value = _maxValue;
+
+        Healed?.Invoke();
     }
 
     public void Decrease(float value)
