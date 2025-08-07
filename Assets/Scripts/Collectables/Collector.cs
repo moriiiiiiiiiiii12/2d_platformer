@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 
 public class Collector : MonoBehaviour
 {
-    public event Action CoinCollected;
-    public event Action<float> HealthKitCollected;
-
+    [SerializeField] private Wallet _wallet;
+    [SerializeField] private Health _health;
+    
     private void OnTriggerEnter2D(Collider2D collider)
     {
         ICollectable collectable;
@@ -17,12 +16,12 @@ public class Collector : MonoBehaviour
         {
             case Coin coin:
                 coin.Collect();
-                CoinCollected?.Invoke();
+                _wallet.IncreaseCoin();
                 break;
 
             case HealthKit healthKit:
                 healthKit.Collect();
-                HealthKitCollected?.Invoke(healthKit.HealingAmount);
+                _health.Increase(healthKit.HealingAmount);
                 break;
         }
     }

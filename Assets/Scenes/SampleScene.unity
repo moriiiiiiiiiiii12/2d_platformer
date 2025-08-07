@@ -176,7 +176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 9136853}
   _targetHealth: {fileID: 1296320683}
-  _damageValue: 15
+  _operation: 1
+  _value: 10
 --- !u!114 &9136853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +285,7 @@ Transform:
   m_GameObject: {fileID: 58997910}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.11, y: 0.29, z: -1.22}
+  m_LocalPosition: {x: -14.11, y: 0.29, z: 2.28}
   m_LocalScale: {x: 6.4977, y: 6.4977, z: 6.4977}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1085,6 +1086,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 1296320683}
   _slider: {fileID: 769774491}
+  _smooth: 1
+  _speedChangeValue: 1
 --- !u!114 &769774491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1797,7 +1800,7 @@ GameObject:
   - component: {fileID: 1203725864}
   - component: {fileID: 1203725863}
   - component: {fileID: 1203725862}
-  - component: {fileID: 1203725861}
+  - component: {fileID: 1203725865}
   m_Layer: 5
   m_Name: HealingButton
   m_TagString: Untagged
@@ -1825,21 +1828,6 @@ RectTransform:
   m_AnchoredPosition: {x: 107.99994, y: 58}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1203725861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1203725859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdfee5819f756bdec85ffb016c940eec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 1203725862}
-  _targetHealth: {fileID: 1296320683}
-  _healingValue: 15
 --- !u!114 &1203725862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1922,6 +1910,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203725859}
   m_CullTransparentMesh: 1
+--- !u!114 &1203725865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203725859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a1de255d93a27b092a413a93f4c01a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1203725862}
+  _targetHealth: {fileID: 1296320683}
+  _operation: 0
+  _value: 10
 --- !u!1 &1252704506
 GameObject:
   m_ObjectHideFlags: 0
@@ -3958,7 +3962,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 157
   m_TargetDisplay: 0
 --- !u!1 &1491124093
 GameObject:
@@ -4079,7 +4083,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1535644455}
   - component: {fileID: 1535644457}
-  - component: {fileID: 1535644456}
+  - component: {fileID: 1535644458}
   m_Layer: 5
   m_Name: HealthSmoothSlider
   m_TagString: Untagged
@@ -4109,21 +4113,6 @@ RectTransform:
   m_AnchoredPosition: {x: 110, y: -130}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1535644456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535644454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abb80796d94a11f40a2d2fca77f816ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 1296320683}
-  _slider: {fileID: 1535644457}
-  _speedChangeValue: 30
 --- !u!114 &1535644457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4175,6 +4164,22 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1535644458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535644454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f174a2a1f945c064a86dfd1e9dc2a66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 1296320683}
+  _slider: {fileID: 1535644457}
+  _smooth: 1
+  _speedChangeValue: 1
 --- !u!1 &1579313352
 GameObject:
   m_ObjectHideFlags: 0

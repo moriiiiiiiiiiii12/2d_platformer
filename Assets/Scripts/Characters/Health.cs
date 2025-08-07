@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Collector _collector;
     [SerializeField] private float _minValue = 0;
     [SerializeField] private float _maxValue = 100;
     [SerializeField] private float _value = 100;
@@ -15,18 +14,6 @@ public class Health : MonoBehaviour
     public float MinValue => _minValue; 
     public float MaxValue => _maxValue; 
     public float Value => _value;
-
-    private void OnEnable()
-    {
-        if (_collector != null)
-            _collector.HealthKitCollected += Increase;
-    }
-
-    private void OnDisable()
-    {
-        if (_collector != null)
-            _collector.HealthKitCollected -= Increase;
-    }
 
     public void Increase(float value)
     {
