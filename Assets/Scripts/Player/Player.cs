@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
         _jumper.ChangeAscending += Ascending;
         _jumper.ChangeFalling += Falling;
 
-        _health.TookDamage += TookDamage;
-        _health.HealthEnded += Die;
+        _health.Damaged += TookDamage;
+        _health.Ended += Die;
     }
 
     private void OnDisable()
@@ -32,8 +32,8 @@ public class Player : MonoBehaviour
         _jumper.ChangeAscending -= Ascending;
         _jumper.ChangeFalling -= Falling;
 
-        _health.TookDamage -= TookDamage;
-        _health.HealthEnded -= Die;
+        _health.Damaged -= TookDamage;
+        _health.Ended -= Die;
     }
 
     private void Update()

@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class HealthSmoothSliderIndicator : HealthSliderIndicatorBase
+public class HealthSmoothSliderIndicator : HealthIndicatorBase
 {
+    [SerializeField] private Slider _slider;
     [SerializeField] private float _speedChangeValue = 100f;
 
     private Coroutine _animation;
@@ -17,11 +19,15 @@ public class HealthSmoothSliderIndicator : HealthSliderIndicatorBase
 
     private IEnumerator UpdateValue()
     {
-        while (Mathf.Approximately(_slider.value, _health.Value) == false)
+        float target = Health.Value / Health.MaxValue;
+
+        while (Mathf.Approximately(_slider.value, target) == false)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, _health.Value, _speedChangeValue * Time.deltaTime);
+            _slider.value = Mathf.MoveTowards(_slider.value, target, _speedChangeValue * Time.deltaTime);
 
             yield return null;
         }
+
+        _animation = null;
     }
 }

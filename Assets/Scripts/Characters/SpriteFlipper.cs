@@ -1,12 +1,14 @@
+using System;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public class SpriteFlipper : MonoBehaviour
 {
     private const float LeftAngle = 180f;
     private const float RightAngle = 0f;
 
-    private bool _isFacingLeft = false;
+    private bool _isFacingLeft;
+
+    public event Action<bool> FacingChanged;
 
     public void Flip(bool isLeft)
     {
@@ -14,7 +16,10 @@ public class SpriteFlipper : MonoBehaviour
             return;
 
         _isFacingLeft = isLeft;
-        float yRotation = isLeft ? LeftAngle : RightAngle;
+
+        float yRotation = _isFacingLeft ? LeftAngle : RightAngle;
         transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+
+        FacingChanged?.Invoke(_isFacingLeft);
     }
 }

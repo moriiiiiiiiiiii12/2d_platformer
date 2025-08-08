@@ -16,14 +16,14 @@ public class Enemy : MonoBehaviour
     {
         _detectRadius.Detect += Follow;
 
-        _health.HealthEnded += Die;
+        _health.Ended += Die;
     }
 
     private void OnDisable()
     {
         _detectRadius.Detect -= Follow;
 
-        _health.HealthEnded -= Die;
+        _health.Ended -= Die;
     }
 
     private void Start()

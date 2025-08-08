@@ -1,31 +1,13 @@
+using System;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 
-public class HealthTextIndicator : MonoBehaviour
+public class HealthTextIndicator : HealthIndicatorBase
 {
-    [SerializeField] private Health _health;
-    [SerializeField] private TextMeshProUGUI _textMeshPro;
+    [SerializeField] private TextMeshProUGUI _text;
 
-    private void OnEnable()
+    protected override void Display()
     {
-        _health.TookDamage += Display;
-        _health.Healed += Display;
-    }
-
-    private void OnDisable()
-    {
-        _health.TookDamage -= Display;
-        _health.Healed -= Display;
-    }
-
-    private void Start()
-    {
-        Display();
-    }
-
-    private void Display()
-    {
-        _textMeshPro.text = $"{math.round(_health.Value)}/{_health.MaxValue}";
+        _text.text = $"{Math.Round(Health.Value)}/{Health.MaxValue}";
     }
 }

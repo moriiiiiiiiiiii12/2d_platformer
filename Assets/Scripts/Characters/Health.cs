@@ -3,44 +3,41 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float _minValue = 0;
-    [SerializeField] private float _maxValue = 100;
-    [SerializeField] private float _value = 100;
+    [SerializeField] private float _minValue = 0f;
+    [SerializeField] private float _maxValue = 100f;
+    [SerializeField] private float _value = 100f;
 
-    public event Action TookDamage;
+    public event Action Changed;
     public event Action Healed;
-    public event Action HealthEnded;
+    public event Action Damaged;
+    public event Action Ended;
 
-    public float MinValue => _minValue; 
-    public float MaxValue => _maxValue; 
+    public float MinValue => _minValue;
+    public float MaxValue => _maxValue;
     public float Value => _value;
 
-    public void Increase(float value)
+    public void Increase(float amount)
     {
-        if (value <= 0)
+        if (amount <= 0f || _value >= _maxValue)
             return;
 
-        if (_value == _maxValue)
-            return;
-
-        _value += value;
-
-        if (_value > _maxValue)
-            _value = _maxValue;
+        _value = Mathf.Min(_value + amount, _maxValue);
 
         Healed?.Invoke();
+        Changed?.Invoke();
     }
 
-    public void Decrease(float value)
+    public void Decrease(float amount)
     {
-        if (value <= 0)
+        if (amount <= 0f || _value <= _minValue)
             return;
 
-        _value -= value;
+        _value = Mathf.Max(_value - amount, _minValue);
 
-        TookDamage?.Invoke();
+        Damaged?.Invoke();
+        Changed?.Invoke();
 
         if (_value <= _minValue)
-            HealthEnded?.Invoke();
+            Ended?.Invoke();
     }
 }
