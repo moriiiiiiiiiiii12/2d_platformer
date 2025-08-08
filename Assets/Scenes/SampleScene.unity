@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 9136855}
   - component: {fileID: 9136854}
   - component: {fileID: 9136853}
-  - component: {fileID: 9136852}
+  - component: {fileID: 9136856}
   m_Layer: 5
   m_Name: DamageButton
   m_TagString: Untagged
@@ -162,22 +162,6 @@ RectTransform:
   m_AnchoredPosition: {x: 108, y: 125.5}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9136852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9136850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42a1de255d93a27b092a413a93f4c01a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 9136853}
-  _targetHealth: {fileID: 1296320683}
-  _operation: 1
-  _value: 10
 --- !u!114 &9136853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +244,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9136850}
   m_CullTransparentMesh: 1
+--- !u!114 &9136856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3650b75a6aea8cca7b5034ba2c377e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 9136853}
+  _targetHealth: {fileID: 1296320683}
+  _amount: 10
 --- !u!1 &58997910
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,37 +692,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1296320677}
---- !u!1 &491331756
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 491331757}
-  m_Layer: 6
-  m_Name: Health
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &491331757
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491331756}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1252704507}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,8 +1054,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 1296320683}
   _slider: {fileID: 769774491}
-  _smooth: 1
-  _speedChangeValue: 1
 --- !u!114 &769774491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1919,13 +1885,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1203725859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42a1de255d93a27b092a413a93f4c01a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ff47e73c0c5e24c78831e7c910daaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1203725862}
   _targetHealth: {fileID: 1296320683}
-  _operation: 0
-  _value: 10
+  _amount: 10
 --- !u!1 &1252704506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,7 +1923,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1714267009}
-  - {fileID: 491331757}
   m_Father: {fileID: 1296320672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1252704508
@@ -1973,6 +1937,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0401ccc31063ada4a941b447c7cfc5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wallet: {fileID: 1714267011}
+  _health: {fileID: 1296320683}
 --- !u!70 &1252704509
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2281,7 +2247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d7ab3c6fb1ff5ded844a9cfaa51a444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collector: {fileID: 1252704508}
   _minValue: 0
   _maxValue: 100
   _value: 100
@@ -4173,13 +4138,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1535644454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f174a2a1f945c064a86dfd1e9dc2a66, type: 3}
+  m_Script: {fileID: 11500000, guid: f5f33d5697cb35228bb3729eb3c87c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1296320683}
   _slider: {fileID: 1535644457}
-  _smooth: 1
-  _speedChangeValue: 1
+  _speedChangeValue: 50
 --- !u!1 &1579313352
 GameObject:
   m_ObjectHideFlags: 0
@@ -4469,7 +4433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60938f7d48c2e28ebac83c22cba1dd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collector: {fileID: 1252704508}
   _countCoin: 0
 --- !u!1 &1728610316
 GameObject:
@@ -4909,7 +4872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d7ab3c6fb1ff5ded844a9cfaa51a444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collector: {fileID: 0}
   _minValue: 0
   _maxValue: 100
   _value: 100
