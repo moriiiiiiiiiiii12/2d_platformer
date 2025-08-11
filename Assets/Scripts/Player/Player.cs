@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private Attacker _attacker;
     [SerializeField] private Health _health;
+    [SerializeField] private Ability _ability;
 
     private bool IsOnGround => _groundChecker.IsOnGround;
 
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
     {
         _inputReader.AttackInput += Attack;
         _inputReader.PressJumpInput += Jump;
+        _inputReader.AbilityInput += ExecuteAbility;
 
         _jumper.ChangeAscending += Ascending;
         _jumper.ChangeFalling += Falling;
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
     {
         _inputReader.AttackInput -= Attack;
         _inputReader.PressJumpInput -= Jump;
+        _inputReader.AbilityInput -= ExecuteAbility;
 
         _jumper.ChangeAscending -= Ascending;
         _jumper.ChangeFalling -= Falling;
@@ -66,6 +69,11 @@ public class Player : MonoBehaviour
     {
         _playerAnimator.TriggerAttack();
         _attacker.Attack();
+    }
+
+    private void ExecuteAbility()
+    {
+        _ability.Execute();
     }
 
     private void TookDamage()
